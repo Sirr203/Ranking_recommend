@@ -117,16 +117,19 @@ with col2:
     st.subheader("Exclude (optional)")
     
     st.markdown("Ingredients to avoid (e.g., pork, egg)")
-    st.write("")
     negative_ingredient = st.text_input("", key="neg_ingredient", label_visibility="collapsed")
+    st.write("")
+    st.write("")
     
     st.markdown("User types to avoid (e.g., losing)")
-    st.write("")
     negative_user_type = st.text_input("", key="neg_user_type", label_visibility="collapsed")
+    st.write("")
+    st.write("")
     
     st.markdown("Tastes to avoid (e.g., tender, sweet)")
-    st.write("")
     negative_taste = st.text_input("", key="neg_taste", label_visibility="collapsed")
+    st.write("")
+    st.write("")
 
 # Build negative_prompt dictionary with all three categories
 user_negative_prompt = {}
