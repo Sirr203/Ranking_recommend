@@ -99,24 +99,18 @@ with col1:
     st.subheader("Include")
     
     # Preferred ingredients
-    st.markdown("Preferred ingredients (e.g., beef, cheese)")
-    # Slider for ingredients priority
-    ingredient_priority = st.slider("", 1, 3, 1, key="ing_priority", 
-                                   help="Set priority level for ingredients (1-3)")
+    st.markdown("Ingredients (e.g., beef, cheese) - Set priority level (1-3)")
+    ingredient_priority = st.slider("", 1, 3, 1, key="ing_priority", label_visibility="collapsed")
     user_ingredient_prompt = st.text_input("", key="ingredient_input", label_visibility="collapsed")
     
     # User type
-    st.markdown("Your type (e.g., gain, normal, athlete)")
-    # Slider for user type priority
-    user_type_priority = st.slider("", 1, 3, 1, key="type_priority",
-                                  help="Set priority level for user type (1-3)")
+    st.markdown("User type (e.g., gain, normal, athlete) - Set priority level (1-3)")
+    user_type_priority = st.slider("", 1, 3, 1, key="type_priority", label_visibility="collapsed")
     user_user_type_prompt = st.text_input("", key="user_type_input", label_visibility="collapsed")
     
     # Preferred tastes
-    st.markdown("Preferred tastes (e.g., rich, sweet)")
-    # Slider for tastes priority
-    taste_priority = st.slider("", 1, 3, 1, key="taste_priority", 
-                              help="Set priority level for tastes (1-3)")
+    st.markdown("Taste (e.g., rich, sweet) - Set priority level (1-3)")
+    taste_priority = st.slider("", 1, 3, 1, key="taste_priority", label_visibility="collapsed")
     user_taste_prompt = st.text_input("", key="taste_input", label_visibility="collapsed")
     
 with col2:
@@ -125,7 +119,7 @@ with col2:
     st.markdown("Ingredients to avoid (e.g., pork, egg)")
     negative_ingredient = st.text_input("", key="neg_ingredient", label_visibility="collapsed")
     
-    st.markdown("Types to avoid (e.g., losing)")
+    st.markdown("User types to avoid (e.g., losing)")
     negative_user_type = st.text_input("", key="neg_user_type", label_visibility="collapsed")
     
     st.markdown("Tastes to avoid (e.g., tender, sweet)")
