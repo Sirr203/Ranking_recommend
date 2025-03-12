@@ -96,34 +96,37 @@ st.title("Food Recommendation App")
 
 # Preferences section
 st.header("Preferences")
-col1, col2, col3 = st.columns([4, 1, 2])
+col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("Include")
     
-    # Row for ingredients with star
-    ing_col1, ing_col2 = st.columns([4, 1])
-    with ing_col1:
-        user_ingredient_prompt = st.text_input("Preferred ingredients (e.g., beef, cheese) ")
-    with ing_col2:
-        prioritize_ingredient = st.checkbox("", key="ing_star", help="Prioritize these ingredients")
+    # Preferred ingredients with inline star
+    st.markdown("Preferred ingredients (e.g., beef, cheese)")
+    ing_container = st.container()
+    ing_columns = ing_container.columns([0.85, 0.075, 0.075])
+    user_ingredient_prompt = ing_columns[0].text_input("", key="ingredient_input", label_visibility="collapsed")
+    prioritize_ingredient = ing_columns[1].checkbox("⭐", key="ing_star", help="Prioritize these ingredients (adds 2 points instead of 1)")
+    ing_columns[2].markdown("ℹ️", help="Separate multiple ingredients with commas")
     
-    # Row for user type with star
-    type_col1, type_col2 = st.columns([4, 1])
-    with type_col1:
-        user_user_type_prompt = st.text_input("Your type (e.g., gain, normal, athlete) ")
-    with type_col2:
-        prioritize_user_type = st.checkbox("", key="type_star", help="Prioritize this type")
+    # User type with inline star
+    st.markdown("Your type (e.g., gain, normal, athlete)")
+    type_container = st.container()
+    type_columns = type_container.columns([0.85, 0.075, 0.075])
+    user_user_type_prompt = type_columns[0].text_input("", key="user_type_input", label_visibility="collapsed")
+    prioritize_user_type = type_columns[1].checkbox("⭐", key="type_star", help="Prioritize this user type (adds 2 points instead of 1)")
+    type_columns[2].markdown("ℹ️", help="User types help match foods to your goals")
     
-    # Row for taste with star
-    taste_col1, taste_col2 = st.columns([4, 1])
-    with taste_col1:
-        user_taste_prompt = st.text_input("Preferred tastes (e.g., rich, sweet) ")
-    with taste_col2:
-        prioritize_taste = st.checkbox("", key="taste_star", help="Prioritize these tastes")
+    # Preferred tastes with inline star
+    st.markdown("Preferred tastes (e.g., rich, sweet)")
+    taste_container = st.container()
+    taste_columns = taste_container.columns([0.85, 0.075, 0.075])
+    user_taste_prompt = taste_columns[0].text_input("", key="taste_input", label_visibility="collapsed")
+    prioritize_taste = taste_columns[1].checkbox("⭐", key="taste_star", help="Prioritize these tastes (adds 2 points instead of 1)")
+    taste_columns[2].markdown("ℹ️", help="Separate multiple tastes with commas")
 
-with col3:
-    st.subheader("Optional")
+with col2:
+    st.subheader("Exclude (optional)")
     negative_ingredient = st.text_input("Ingredients to avoid (e.g., pork, egg) ")
     negative_user_type = st.text_input("Types to avoid (e.g., losing) ")
     negative_taste = st.text_input("Tastes to avoid (e.g., tender, sweet) ")
