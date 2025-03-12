@@ -119,7 +119,7 @@ if not user_negative_prompt:
 st.header("Additional Options")
 user_desired_calories = st.number_input("Desired calories per serving: ", value=None, min_value=0, format="%d")
 
-if st.button("Recommend Foods"):
+if st.button(""):
     recommended_foods = recommend_food(
         df=df,
         ingredient_prompt=user_ingredient_prompt,
