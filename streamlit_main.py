@@ -86,12 +86,38 @@ df = load_data(excel_file_path)
 # Streamlit UI
 st.title("Food Recommendation App")
 
-user_ingredient_prompt = st.text_input("Enter preferred ingredients (e.g., beef, cheese): ")
-user_user_type_prompt = st.text_input("Enter your type (gain/losing/normal/athlete)(e.g., gain,normal): ")
-user_taste_prompt = st.text_input("Enter preferred tastes (e.g., rich, sweet): ")
-negative_taste = st.text_input("Enter tastes to avoid (e.g., tender, sweet): ")
-user_negative_prompt = {'Taste': negative_taste} if negative_taste else None
-user_desired_calories = st.number_input("Enter desired calories per serving (or leave blank): ", value=None, format="%d")
+# Preferences section
+st.header("Preferences")
+col1, col2 = st.columns(2)
+
+with col1:
+    st.subheader("Include")
+    user_ingredient_prompt = st.text_input("Preferred ingredients (e.g., beef, cheese): ")
+    user_user_type_prompt = st.text_input("Your type (e.g., gain, normal, athlete): ")
+    user_taste_prompt = st.text_input("Preferred tastes (e.g., rich, sweet): ")
+
+with col2:
+    st.subheader("Exclude")
+    negative_ingredient = st.text_input("Ingredients to avoid (e.g., pork, egg): ")
+    negative_user_type = st.text_input("Types to avoid (e.g., losing): ")
+    negative_taste = st.text_input("Tastes to avoid (e.g., tender, sweet): ")
+
+# Build negative_prompt dictionary with all three categories
+user_negative_prompt = {}
+if negative_ingredient:
+    user_negative_prompt['Ingredient'] = negative_ingredient
+if negative_user_type:
+    user_negative_prompt['User Type'] = negative_user_type
+if negative_taste:
+    user_negative_prompt['Taste'] = negative_taste
+
+# Set to None if empty
+if not user_negative_prompt:
+    user_negative_prompt = None
+
+# Additional options
+st.header("Additional Options")
+user_desired_calories = st.number_input("Desired calories per serving: ", value=None, min_value=0, format="%d")
 
 if st.button("Recommend Foods"):
     recommended_foods = recommend_food(
