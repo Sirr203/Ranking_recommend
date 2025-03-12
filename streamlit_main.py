@@ -121,6 +121,7 @@ with col2:
     st.write("")
     st.write("")
     st.write("")
+    st.write("")
     
     st.markdown("User types to avoid (e.g., losing)")
     negative_user_type = st.text_input("", key="neg_user_type", label_visibility="collapsed")
