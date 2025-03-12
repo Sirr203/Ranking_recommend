@@ -100,17 +100,17 @@ with col1:
     st.subheader("Include")
     
     # Preferred ingredients
-    st.markdown("Ingredients (e.g., beef, cheese) - Set priority level (1-3)")
+    st.markdown("Ingredients (e.g., beef, cheese)")
     ingredient_priority = st.slider("", 1, 3, 1, key="ing_priority", label_visibility="collapsed")
     user_ingredient_prompt = st.text_input("", key="ingredient_input", label_visibility="collapsed")
     
     # User type
-    st.markdown("User type (e.g., gain, normal, athlete) - Set priority level (1-3)")
+    st.markdown("User type (e.g., gain, normal, athlete)")
     user_type_priority = st.slider("", 1, 3, 1, key="type_priority", label_visibility="collapsed")
     user_user_type_prompt = st.text_input("", key="user_type_input", label_visibility="collapsed")
     
     # Preferred tastes
-    st.markdown("Taste (e.g., rich, sweet) - Set priority level (1-3)")
+    st.markdown("Taste (e.g., rich, sweet)")
     taste_priority = st.slider("", 1, 3, 1, key="taste_priority", label_visibility="collapsed")
     user_taste_prompt = st.text_input("", key="taste_input", label_visibility="collapsed")
     
