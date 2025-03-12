@@ -16,9 +16,12 @@ def load_data(excel_file):
     df = pd.concat(excel_data.values(), ignore_index=True)
     return df
 
-def recommend_food(df, calories_prompt_per100=None, ingredient_prompt=None, user_type_prompt=None, taste_prompt=None, negative_prompt=None, top_n=5, desired_calories=None):
+def recommend_food(df, calories_prompt_per100=None, ingredient_prompt=None, user_type_prompt=None, taste_prompt=None, 
+                  negative_prompt=None, top_n=5, desired_calories=None,
+                  prioritize_ingredient=False, prioritize_user_type=False, prioritize_taste=False):
     """
     Recommends food from a DataFrame, sorted by score, randomized within the highest score group, and calculates serving size.
+    Now with prioritization feature that can increase the score for certain criteria.
     """
     df['Ranking Score'] = 0
 
@@ -28,19 +31,24 @@ def recommend_food(df, calories_prompt_per100=None, ingredient_prompt=None, user
         df = df[df['Calories/Serving_str_first_digit'] == calories_first_digit_prompt]
         df = df.drop(columns=['Calories/Serving_str_first_digit'])
 
+    # For each preference, add either 1 or 2 points based on prioritization
     if ingredient_prompt:
         ingredients = [ing.strip().lower() for ing in ingredient_prompt.split(',')]
+        score_increment = 2 if prioritize_ingredient else 1
         for ingredient in ingredients:
-            df.loc[df['Ingredients'].str.lower().str.contains(ingredient, na=False), 'Ranking Score'] += 1
+            df.loc[df['Ingredients'].str.lower().str.contains(ingredient, na=False), 'Ranking Score'] += score_increment
+
     if user_type_prompt:
         user_types = [ut.strip().lower() for ut in user_type_prompt.split(',')]
+        score_increment = 2 if prioritize_user_type else 1
         for user_type in user_types:
-            df.loc[df['User type'].str.lower().str.contains(user_type, na=False), 'Ranking Score'] += 1
+            df.loc[df['User type'].str.lower().str.contains(user_type, na=False), 'Ranking Score'] += score_increment
+
     if taste_prompt:
-        if taste_prompt:  # Check if taste_prompt is not None
-            tastes = [t.strip().lower() for t in taste_prompt.split(',')]
-        else:
-            tastes = []
+        tastes = [t.strip().lower() for t in taste_prompt.split(',')]
+        score_increment = 2 if prioritize_taste else 1
+        for taste in tastes:
+            df.loc[df['Taste'].str.lower().str.contains(taste, na=False), 'Ranking Score'] += score_increment
     else:
         tastes = []
 
@@ -88,15 +96,33 @@ st.title("Food Recommendation App")
 
 # Preferences section
 st.header("Preferences")
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns([3, 1, 3])
 
 with col1:
     st.subheader("Include")
-    user_ingredient_prompt = st.text_input("Preferred ingredients (e.g., beef, cheese) ")
-    user_user_type_prompt = st.text_input("Your type (e.g., gain, normal, athlete) ")
-    user_taste_prompt = st.text_input("Preferred tastes (e.g., rich, sweet) ")
+    
+    # Row for ingredients with star
+    ing_col1, ing_col2 = st.columns([4, 1])
+    with ing_col1:
+        user_ingredient_prompt = st.text_input("Preferred ingredients (e.g., beef, cheese) ")
+    with ing_col2:
+        prioritize_ingredient = st.checkbox("⭐", key="ing_star", help="Prioritize these ingredients (adds 2 points instead of 1)")
+    
+    # Row for user type with star
+    type_col1, type_col2 = st.columns([4, 1])
+    with type_col1:
+        user_user_type_prompt = st.text_input("Your type (e.g., gain, normal, athlete) ")
+    with type_col2:
+        prioritize_user_type = st.checkbox("⭐", key="type_star", help="Prioritize this user type (adds 2 points instead of 1)")
+    
+    # Row for taste with star
+    taste_col1, taste_col2 = st.columns([4, 1])
+    with taste_col1:
+        user_taste_prompt = st.text_input("Preferred tastes (e.g., rich, sweet) ")
+    with taste_col2:
+        prioritize_taste = st.checkbox("⭐", key="taste_star", help="Prioritize these tastes (adds 2 points instead of 1)")
 
-with col2:
+with col3:
     st.subheader("Exclude (optional)")
     negative_ingredient = st.text_input("Ingredients to avoid (e.g., pork, egg) ")
     negative_user_type = st.text_input("Types to avoid (e.g., losing) ")
@@ -127,7 +153,10 @@ if st.button("Recommend food"):
         taste_prompt=user_taste_prompt,
         negative_prompt=user_negative_prompt,
         top_n=5,
-        desired_calories=user_desired_calories
+        desired_calories=user_desired_calories,
+        prioritize_ingredient=prioritize_ingredient,
+        prioritize_user_type=prioritize_user_type,
+        prioritize_taste=prioritize_taste
     )
 
     # st.write("Recommended Foods:")
