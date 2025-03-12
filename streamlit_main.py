@@ -106,21 +106,21 @@ with col1:
     with ing_col1:
         user_ingredient_prompt = st.text_input("Preferred ingredients (e.g., beef, cheese) ")
     with ing_col2:
-        prioritize_ingredient = st.checkbox("⭐", key="ing_star", help="Prioritize these ingredients (adds 2 points instead of 1)")
+        prioritize_ingredient = st.checkbox("", key="ing_star", help="Prioritize these ingredients")
     
     # Row for user type with star
     type_col1, type_col2 = st.columns([4, 1])
     with type_col1:
         user_user_type_prompt = st.text_input("Your type (e.g., gain, normal, athlete) ")
     with type_col2:
-        prioritize_user_type = st.checkbox("⭐", key="type_star", help="Prioritize this user type (adds 2 points instead of 1)")
+        prioritize_user_type = st.checkbox("", key="type_star", help="Prioritize this type")
     
     # Row for taste with star
     taste_col1, taste_col2 = st.columns([4, 1])
     with taste_col1:
         user_taste_prompt = st.text_input("Preferred tastes (e.g., rich, sweet) ")
     with taste_col2:
-        prioritize_taste = st.checkbox("⭐", key="taste_star", help="Prioritize these tastes (adds 2 points instead of 1)")
+        prioritize_taste = st.checkbox("", key="taste_star", help="Prioritize these tastes")
 
 with col3:
     st.subheader("Exclude (optional)")
