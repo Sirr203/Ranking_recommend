@@ -123,7 +123,7 @@ with col1:
         prioritize_taste = st.checkbox("", key="taste_star", help="Prioritize these tastes")
 
 with col3:
-    st.subheader("Exclude (optional)")
+    st.subheader("Optional")
     negative_ingredient = st.text_input("Ingredients to avoid (e.g., pork, egg) ")
     negative_user_type = st.text_input("Types to avoid (e.g., losing) ")
     negative_taste = st.text_input("Tastes to avoid (e.g., tender, sweet) ")
