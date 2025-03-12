@@ -102,7 +102,7 @@ css = """
 </style>
 """
 st.markdown(css, unsafe_allow_html=True)
-with st.container()
+with st.container():
     col1, col2 = st.columns(2)
     
     with col1:
