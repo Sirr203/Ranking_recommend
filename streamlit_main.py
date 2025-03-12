@@ -88,8 +88,8 @@ st.title("Food Recommendation App")
 
 user_ingredient_prompt = st.text_input("Enter preferred ingredients (e.g., beef, cheese): ")
 user_user_type_prompt = st.text_input("Enter your type (gain/losing/normal/athlete)(e.g., gain,normal): ")
-user_taste_prompt = st.text_input("Enter preferred tastes (e.g., rich): ")
-negative_taste = st.text_input("Enter tastes to avoid (e.g., tender): ")
+user_taste_prompt = st.text_input("Enter preferred tastes (e.g., rich, sweet): ")
+negative_taste = st.text_input("Enter tastes to avoid (e.g., tender, sweet): ")
 user_negative_prompt = {'Taste': negative_taste} if negative_taste else None
 user_desired_calories = st.number_input("Enter desired calories per serving (or leave blank): ", value=None, format="%d")
 
