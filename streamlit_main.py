@@ -97,7 +97,7 @@ st.header("Preferences")
 css = """
 <style>
     [data-testid="column"]:nth-child(2) > div > div > div > div {
-        margin-bottom: 30px; /* Điều chỉnh giá trị này để tăng/giảm khoảng trống */
+        margin-bottom: 100px; /* Điều chỉnh giá trị này để tăng/giảm khoảng trống */
     }
 </style>
 """
