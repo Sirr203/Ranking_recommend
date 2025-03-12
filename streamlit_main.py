@@ -97,7 +97,7 @@ with col1:
     user_taste_prompt = st.text_input("Preferred tastes (e.g., rich, sweet): ")
 
 with col2:
-    st.subheader("Exclude")
+    st.subheader("Exclude (optional)")
     negative_ingredient = st.text_input("Ingredients to avoid (e.g., pork, egg): ")
     negative_user_type = st.text_input("Types to avoid (e.g., losing): ")
     negative_taste = st.text_input("Tastes to avoid (e.g., tender, sweet): ")
