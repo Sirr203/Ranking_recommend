@@ -107,7 +107,7 @@ with col1:
     ing_columns = ing_container.columns([0.85, 0.075, 0.075])
     user_ingredient_prompt = ing_columns[0].text_input("", key="ingredient_input", label_visibility="collapsed")
     prioritize_ingredient = ing_columns[1].checkbox("⭐", key="ing_star", help="Prioritize these ingredients (adds 2 points instead of 1)")
-    ing_columns[2].markdown("ℹ️", help="Separate multiple ingredients with commas")
+    # ing_columns[2].markdown("ℹ️", help="Separate multiple ingredients with commas")
     
     # User type with inline star
     st.markdown("Your type (e.g., gain, normal, athlete)")
