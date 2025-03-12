@@ -96,7 +96,7 @@ st.title("Food Recommendation App")
 
 # Preferences section
 st.header("Preferences")
-col1, col2, col3 = st.columns([3, 1, 3])
+col1, col2, col3 = st.columns([4, 1, 2])
 
 with col1:
     st.subheader("Include")
