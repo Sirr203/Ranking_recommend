@@ -94,6 +94,15 @@ st.title("Food Recommendation App")
 # Preferences section
 st.header("Preferences")
 
+css = """
+<style>
+    [data-testid="column"]:nth-child(2) > div > div > div > div {
+        margin-bottom: 100px; /* Đã chỉnh lên 100px như bạn nói */
+    }
+</style>
+"""
+st.markdown(css, unsafe_allow_html=True)
+
 col1, col2 = st.columns(2)
 
 with col1:
