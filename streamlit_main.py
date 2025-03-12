@@ -92,15 +92,15 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("Include")
-    user_ingredient_prompt = st.text_input("Preferred ingredients (e.g., beef, cheese): ")
-    user_user_type_prompt = st.text_input("Your type (e.g., gain, normal, athlete): ")
-    user_taste_prompt = st.text_input("Preferred tastes (e.g., rich, sweet): ")
+    user_ingredient_prompt = st.text_input("Preferred ingredients (e.g., beef, cheese) ")
+    user_user_type_prompt = st.text_input("Your type (e.g., gain, normal, athlete) ")
+    user_taste_prompt = st.text_input("Preferred tastes (e.g., rich, sweet) ")
 
 with col2:
     st.subheader("Exclude (optional)")
-    negative_ingredient = st.text_input("Ingredients to avoid (e.g., pork, egg): ")
-    negative_user_type = st.text_input("Types to avoid (e.g., losing): ")
-    negative_taste = st.text_input("Tastes to avoid (e.g., tender, sweet): ")
+    negative_ingredient = st.text_input("Ingredients to avoid (e.g., pork, egg) ")
+    negative_user_type = st.text_input("Types to avoid (e.g., losing) ")
+    negative_taste = st.text_input("Tastes to avoid (e.g., tender, sweet) ")
 
 # Build negative_prompt dictionary with all three categories
 user_negative_prompt = {}
@@ -117,9 +117,9 @@ if not user_negative_prompt:
 
 # Additional options
 st.header("Additional Options")
-user_desired_calories = st.number_input("Desired calories per serving: ", value=None, min_value=0, format="%d")
+user_desired_calories = st.number_input("Desired calories per serving ", value=None, min_value=0, format="%d")
 
-if st.button(""):
+if st.button("Recommend food"):
     recommended_foods = recommend_food(
         df=df,
         ingredient_prompt=user_ingredient_prompt,
@@ -130,5 +130,5 @@ if st.button(""):
         desired_calories=user_desired_calories
     )
 
-    st.write("Recommended Foods:")
+    # st.write("Recommended Foods:")
     st.dataframe(recommended_foods)
