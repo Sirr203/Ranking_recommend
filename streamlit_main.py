@@ -94,47 +94,43 @@ st.title("Food Recommendation App")
 # Preferences section
 st.header("Preferences")
 
-css = """
-<style>
-    [data-testid="column"]:nth-child(2) > div > div > div > div {
-        margin-bottom: 100px; /* Điều chỉnh giá trị này để tăng/giảm khoảng trống */
-    }
-</style>
-"""
-st.markdown(css, unsafe_allow_html=True)
+col1, col2 = st.columns(2)
 
-with st.container(): # Để đảm bảo CSS áp dụng đúng cách
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.subheader("Include")
-
-        # Preferred ingredients
-        st.markdown("Ingredients (e.g., beef, cheese)")
-        ingredient_priority = st.slider("", 1, 3, 1, key="ing_priority", label_visibility="collapsed")
-        user_ingredient_prompt = st.text_input("", key="ingredient_input", label_visibility="collapsed")
-
-        # User type
-        st.markdown("User type (e.g., gain, normal, athlete)")
-        user_type_priority = st.slider("", 1, 3, 1, key="type_priority", label_visibility="collapsed")
-        user_user_type_prompt = st.text_input("", key="user_type_input", label_visibility="collapsed")
-
-        # Preferred tastes
-        st.markdown("Taste (e.g., rich, sweet)")
-        taste_priority = st.slider("", 1, 3, 1, key="taste_priority", label_visibility="collapsed")
-        user_taste_prompt = st.text_input("", key="taste_input", label_visibility="collapsed")
-
-    with col2:
-        st.subheader("Exclude (optional)")
-
-        st.markdown("Ingredients to avoid (e.g., pork, egg)")
-        negative_ingredient = st.text_input("", key="neg_ingredient", label_visibility="collapsed")
-
-        st.markdown("User types to avoid (e.g., losing)")
-        negative_user_type = st.text_input("", key="neg_user_type", label_visibility="collapsed")
-
-        st.markdown("Tastes to avoid (e.g., tender, sweet)")
-        negative_taste = st.text_input("", key="neg_taste", label_visibility="collapsed")
+with col1:
+    st.subheader("Include")
+    
+    # Preferred ingredients
+    st.markdown("Preferred ingredients (e.g., beef, cheese)")
+    # Slider for ingredients priority
+    ingredient_priority = st.slider("", 1, 3, 1, key="ing_priority", 
+                                   help="Set priority level for ingredients (1-3)")
+    user_ingredient_prompt = st.text_input("", key="ingredient_input", label_visibility="collapsed")
+    
+    # User type
+    st.markdown("Your type (e.g., gain, normal, athlete)")
+    # Slider for user type priority
+    user_type_priority = st.slider("", 1, 3, 1, key="type_priority",
+                                  help="Set priority level for user type (1-3)")
+    user_user_type_prompt = st.text_input("", key="user_type_input", label_visibility="collapsed")
+    
+    # Preferred tastes
+    st.markdown("Preferred tastes (e.g., rich, sweet)")
+    # Slider for tastes priority
+    taste_priority = st.slider("", 1, 3, 1, key="taste_priority", 
+                              help="Set priority level for tastes (1-3)")
+    user_taste_prompt = st.text_input("", key="taste_input", label_visibility="collapsed")
+    
+with col2:
+    st.subheader("Exclude (optional)")
+    
+    st.markdown("Ingredients to avoid (e.g., pork, egg)")
+    negative_ingredient = st.text_input("", key="neg_ingredient", label_visibility="collapsed")
+    
+    st.markdown("Types to avoid (e.g., losing)")
+    negative_user_type = st.text_input("", key="neg_user_type", label_visibility="collapsed")
+    
+    st.markdown("Tastes to avoid (e.g., tender, sweet)")
+    negative_taste = st.text_input("", key="neg_taste", label_visibility="collapsed")
         
 # Build negative_prompt dictionary with all three categories
 user_negative_prompt = {}
