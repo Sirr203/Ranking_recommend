@@ -18,10 +18,10 @@ def load_data(excel_file):
 
 def recommend_food(df, calories_prompt_per100=None, ingredient_prompt=None, user_type_prompt=None, taste_prompt=None, 
                   negative_prompt=None, top_n=5, desired_calories=None,
-                  prioritize_ingredient=False, prioritize_user_type=False, prioritize_taste=False):
+                  ingredient_priority=1, user_type_priority=1, taste_priority=1):
     """
     Recommends food from a DataFrame, sorted by score, randomized within the highest score group, and calculates serving size.
-    Now with prioritization feature that can increase the score for certain criteria.
+    Now with variable prioritization feature that can increase the score for certain criteria based on priority level (1-3).
     """
     df['Ranking Score'] = 0
 
@@ -31,24 +31,21 @@ def recommend_food(df, calories_prompt_per100=None, ingredient_prompt=None, user
         df = df[df['Calories/Serving_str_first_digit'] == calories_first_digit_prompt]
         df = df.drop(columns=['Calories/Serving_str_first_digit'])
 
-    # For each preference, add either 1 or 2 points based on prioritization
+    # For each preference, add points based on priority level (1-3)
     if ingredient_prompt:
         ingredients = [ing.strip().lower() for ing in ingredient_prompt.split(',')]
-        score_increment = 2 if prioritize_ingredient else 1
         for ingredient in ingredients:
-            df.loc[df['Ingredients'].str.lower().str.contains(ingredient, na=False), 'Ranking Score'] += score_increment
+            df.loc[df['Ingredients'].str.lower().str.contains(ingredient, na=False), 'Ranking Score'] += ingredient_priority
 
     if user_type_prompt:
         user_types = [ut.strip().lower() for ut in user_type_prompt.split(',')]
-        score_increment = 2 if prioritize_user_type else 1
         for user_type in user_types:
-            df.loc[df['User type'].str.lower().str.contains(user_type, na=False), 'Ranking Score'] += score_increment
+            df.loc[df['User type'].str.lower().str.contains(user_type, na=False), 'Ranking Score'] += user_type_priority
 
     if taste_prompt:
         tastes = [t.strip().lower() for t in taste_prompt.split(',')]
-        score_increment = 2 if prioritize_taste else 1
         for taste in tastes:
-            df.loc[df['Taste'].str.lower().str.contains(taste, na=False), 'Ranking Score'] += score_increment
+            df.loc[df['Taste'].str.lower().str.contains(taste, na=False), 'Ranking Score'] += taste_priority
     else:
         tastes = []
 
@@ -101,26 +98,26 @@ col1, col2 = st.columns(2)
 with col1:
     st.subheader("Include")
     
-    # Preferred ingredients with inline star
+    # Preferred ingredients with priority slider
     st.markdown("Preferred ingredients (e.g., beef, cheese)")
     ing_container = st.container()
-    ing_columns = ing_container.columns([0.85, 0.075, 0.075])
+    ing_columns = ing_container.columns([0.7, 0.3])
     user_ingredient_prompt = ing_columns[0].text_input("", key="ingredient_input", label_visibility="collapsed")
-    prioritize_ingredient = ing_columns[1].checkbox("", key="ing_star", help="Prioritize these ingredients")
+    ingredient_priority = ing_columns[1].slider("Priority", 1, 3, 1, key="ing_priority", help="Set priority level for ingredients")
     
-    # User type with inline star
+    # User type with priority slider
     st.markdown("Your type (e.g., gain, normal, athlete)")
     type_container = st.container()
-    type_columns = type_container.columns([0.85, 0.075, 0.075])
+    type_columns = type_container.columns([0.7, 0.3])
     user_user_type_prompt = type_columns[0].text_input("", key="user_type_input", label_visibility="collapsed")
-    prioritize_user_type = type_columns[1].checkbox("", key="type_star", help="Prioritize this user type")
+    user_type_priority = type_columns[1].slider("Priority", 1, 3, 1, key="type_priority", help="Set priority level for user type")
     
-    # Preferred tastes with inline star
+    # Preferred tastes with priority slider
     st.markdown("Preferred tastes (e.g., rich, sweet)")
     taste_container = st.container()
-    taste_columns = taste_container.columns([0.85, 0.075, 0.075])
+    taste_columns = taste_container.columns([0.7, 0.3])
     user_taste_prompt = taste_columns[0].text_input("", key="taste_input", label_visibility="collapsed")
-    prioritize_taste = taste_columns[1].checkbox("", key="taste_star", help="Prioritize these tastes")
+    taste_priority = taste_columns[1].slider("Priority", 1, 3, 1, key="taste_priority", help="Set priority level for tastes")
     
 with col2:
     st.subheader("Exclude (optional)")
@@ -154,9 +151,9 @@ if st.button("Recommend food"):
         negative_prompt=user_negative_prompt,
         top_n=5,
         desired_calories=user_desired_calories,
-        prioritize_ingredient=prioritize_ingredient,
-        prioritize_user_type=prioritize_user_type,
-        prioritize_taste=prioritize_taste
+        ingredient_priority=ingredient_priority,
+        user_type_priority=user_type_priority,
+        taste_priority=taste_priority
     )
 
     # st.write("Recommended Foods:")
