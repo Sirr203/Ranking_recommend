@@ -101,21 +101,21 @@ with col1:
     # Preferred ingredients
     st.markdown("Preferred ingredients (e.g., beef, cheese)")
     # Slider for ingredients priority
-    ingredient_priority = st.slider("Ingredient Priority", 1, 3, 1, key="ing_priority", 
+    ingredient_priority = st.slider("", 1, 3, 1, key="ing_priority", 
                                    help="Set priority level for ingredients (1-3)")
     user_ingredient_prompt = st.text_input("", key="ingredient_input", label_visibility="collapsed")
     
     # User type
     st.markdown("Your type (e.g., gain, normal, athlete)")
     # Slider for user type priority
-    user_type_priority = st.slider("User Type Priority", 1, 3, 1, key="type_priority",
+    user_type_priority = st.slider("", 1, 3, 1, key="type_priority",
                                   help="Set priority level for user type (1-3)")
     user_user_type_prompt = st.text_input("", key="user_type_input", label_visibility="collapsed")
     
     # Preferred tastes
     st.markdown("Preferred tastes (e.g., rich, sweet)")
     # Slider for tastes priority
-    taste_priority = st.slider("Taste Priority", 1, 3, 1, key="taste_priority", 
+    taste_priority = st.slider("", 1, 3, 1, key="taste_priority", 
                               help="Set priority level for tastes (1-3)")
     user_taste_prompt = st.text_input("", key="taste_input", label_visibility="collapsed")
     
