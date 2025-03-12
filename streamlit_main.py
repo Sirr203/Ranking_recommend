@@ -100,7 +100,7 @@ with col1:
     
     # Preferred ingredients
     st.markdown("Ingredients (e.g., beef, cheese)")
-    ingredient_priority = st.slider("", 1, 2, 1, key="ing_priority", label_visibility="collapsed")
+    ingredient_priority = st.slider("", 1, 3, 1, key="ing_priority", label_visibility="collapsed")
     user_ingredient_prompt = st.text_input("", key="ingredient_input", label_visibility="collapsed")
     
     # User type
